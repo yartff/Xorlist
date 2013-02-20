@@ -68,5 +68,6 @@ Xor_pushback(Xorlist *list, void *elem) {
     return (EXIT_FAILURE);
   ref->key = XOR_KEY(prev, new);
   list->last = new;
+  ++list->size;
   return (EXIT_SUCCESS);
 }
