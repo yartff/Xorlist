@@ -71,3 +71,18 @@ Xor_pushback(Xorlist *list, void *elem) {
   ++list->size;
   return (EXIT_SUCCESS);
 }
+
+int
+Xor_pushfront(Xorlist *list, void *elem) {
+  Xormodule	*ref = list->first, *next, *new;
+
+  if (!ref)
+    return (Xor_emptypush(list, elem));
+  next = XOR_KEY_ADDR(NULL, ref->key);
+  if (!(new = Xor_newmodule(elem, NULL, ref)))
+    return (EXIT_FAILURE);
+  ref->key = XOR_KEY(new, next);
+  list->first = new;
+  ++list->size;
+  return (EXIT_SUCCESS);
+}

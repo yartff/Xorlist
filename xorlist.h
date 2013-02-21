@@ -19,6 +19,7 @@ typedef struct	{
 
 Xorlist		*Xor_create(void);
 int		Xor_pushback(Xorlist *, void *);
+int		Xor_pushfront(Xorlist *, void *);
 void		Xor_foreach(Xorlist *, void (*)(void *));
 void		Xor_foreach_rev(Xorlist *, void (*)(void *));
 
