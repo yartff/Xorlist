@@ -57,9 +57,9 @@ Xor_emptypush(Xorlist *list, void *elem) {
   return (EXIT_SUCCESS);
 }
 
-int
-Xor_pushback(Xorlist *list, void *elem) {
-  Xormodule	*ref = list->last, *prev, *new;
+static int
+Xor_push_go(Xorlist *list, Xormodule **fl, void *elem) {
+  Xormodule	*ref = *fl, *prev, *new;
 
   if (!ref)
     return (Xor_emptypush(list, elem));
@@ -67,22 +67,17 @@ Xor_pushback(Xorlist *list, void *elem) {
   if (!(new = Xor_newmodule(elem, ref, NULL)))
     return (EXIT_FAILURE);
   ref->key = XOR_KEY(prev, new);
-  list->last = new;
+  *fl = new;
   ++list->size;
   return (EXIT_SUCCESS);
 }
 
 int
-Xor_pushfront(Xorlist *list, void *elem) {
-  Xormodule	*ref = list->first, *next, *new;
+Xor_pushback(Xorlist *list, void *elem) {
+  return (Xor_push_go(list, &list->last, elem));
+}
 
-  if (!ref)
-    return (Xor_emptypush(list, elem));
-  next = XOR_KEY_ADDR(NULL, ref->key);
-  if (!(new = Xor_newmodule(elem, NULL, ref)))
-    return (EXIT_FAILURE);
-  ref->key = XOR_KEY(new, next);
-  list->first = new;
-  ++list->size;
-  return (EXIT_SUCCESS);
+int
+Xor_pushfront(Xorlist *list, void *elem) {
+  return (Xor_push_go(list, &list->first, elem));
 }
