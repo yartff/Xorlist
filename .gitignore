@@ -1,3 +1,5 @@
+.*.sw[aop]
+
 # Object files
 *.o
 
