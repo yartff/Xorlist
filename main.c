@@ -2,6 +2,7 @@
 #include	<stdio.h>
 #include	<stdint.h>
 #include	"xorlist.h"
+
 Xormodule *s;
 
 void
@@ -21,7 +22,7 @@ main() {
       return (EXIT_FAILURE);
     ++i;
   }
-  //
+  // !
   printf("Foreach:\n");
   Xor_foreach(list, &dump_it);
   printf("Reverse Foreach:\n");

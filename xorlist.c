@@ -16,7 +16,7 @@ Xor_create(void) {
 
 static	Xormodule *
 Xor_newmodule(void *elem, void *kp, void *kn) {
-  Xormodule	*new = malloc(sizeof(Xormodule *));
+  Xormodule	*new = malloc(sizeof(*new));
   if (!new)
     return (NULL);
   new->elem = elem;
