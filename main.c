@@ -23,9 +23,10 @@ main() {
     ++i;
   }
   // !
-  printf("Foreach:\n");
-  Xor_foreach(list, &dump_it);
-  printf("Reverse Foreach:\n");
-  Xor_foreach_rev(list, &dump_it);
+    Xor_foreach(list, &dump_it);
+  while (Xor_popfront(list) == EXIT_SUCCESS) {
+    printf("Foreach:\n");
+    Xor_foreach(list, &dump_it);
+  }
   return (EXIT_SUCCESS);
 }

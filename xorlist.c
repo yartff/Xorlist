@@ -45,7 +45,11 @@ Xor_foreach(Xorlist *list, void (*callback)(void *)) {
   Xor_foreach_go(list->first, callback);
 }
 
-int
+/*
+ * Push Methods
+ */
+
+static int
 Xor_emptypush(Xorlist *list, void *elem) {
   Xormodule	*new;
 
@@ -80,4 +84,27 @@ Xor_pushback(Xorlist *list, void *elem) {
 int
 Xor_pushfront(Xorlist *list, void *elem) {
   return (Xor_push_go(list, &list->first, elem));
+}
+
+/*
+ * Pop Methods
+ */
+
+int
+Xor_popfront(Xorlist *list) {
+  Xormodule	*p, *next, *pnext;
+  if (!(p = list->first))
+    return (EXIT_FAILURE);
+  if (!(next = XOR_KEY_ADDR(NULL, p->key)))
+    return (EXIT_FAILURE);
+  pnext = XOR_KEY_ADDR(p, next->key);
+  free(p);
+  next->key = XOR_KEY(NULL, pnext);
+  if (list->last == list->first) {
+    list->last = NULL;
+    list->first = NULL;
+    return (EXIT_SUCCESS);
+  }
+  list->first = next;
+  return (EXIT_SUCCESS);
 }
