@@ -21,12 +21,12 @@ typedef struct	{
 # define	Xor_front(x)	(x->first ? x->first->elem : NULL);
 # define	Xor_back(x)	(x->last ? x->last->elem : NULL);
 Xorlist		Xor_create(void);
-int		Xor_destroy(Xorlist );
-int		Xor_popback(Xorlist );
-int		Xor_popfront(Xorlist );
-int		Xor_pushback(Xorlist , void *);
-int		Xor_pushfront(Xorlist , void *);
-void		Xor_foreach(Xorlist , void (*)(void *));
-void		Xor_foreach_rev(Xorlist , void (*)(void *));
+int		Xor_destroy(Xorlist);
+int		Xor_popback(Xorlist);
+int		Xor_popfront(Xorlist);
+int		Xor_pushback(Xorlist, void *);
+int		Xor_pushfront(Xorlist, void *);
+void		Xor_foreach(Xorlist, void (*)(void *));
+void		Xor_foreach_rev(Xorlist, void (*)(void *));
 
 #endif
