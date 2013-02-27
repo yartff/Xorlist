@@ -14,14 +14,11 @@ Xor_create(void) {
   return (list);
 }
 
-static	Xormodule *
-Xor_newmodule(void *elem, void *kp, void *kn) {
-  Xormodule	*new = malloc(sizeof(*new));
-  if (!new)
-    return (NULL);
-  new->elem = elem;
-  new->key = XOR_KEY(kp, kn);
-  return (new);
+int
+Xor_destroy(Xorlist *list) {
+  while (Xor_popback(list) == EXIT_SUCCESS);
+  free(list);
+  return (EXIT_SUCCESS);
 }
 
 static void
@@ -43,6 +40,16 @@ Xor_foreach_rev(Xorlist *list, void (*callback)(void *)) {
 void
 Xor_foreach(Xorlist *list, void (*callback)(void *)) {
   Xor_foreach_go(list->first, callback);
+}
+
+static	Xormodule *
+Xor_newmodule(void *elem, void *kp, void *kn) {
+  Xormodule	*new = malloc(sizeof(*new));
+  if (!new)
+    return (NULL);
+  new->elem = elem;
+  new->key = XOR_KEY(kp, kn);
+  return (new);
 }
 
 /*

@@ -5,28 +5,42 @@
 
 Xormodule *s;
 
+int	tab[] = {50, 150, 284, 6465};
 void
 dump_it(void *t) {
   printf("%d\n", *(int *)t);
 }
 
 int
-main() {
-  Xorlist	*list = Xor_create();
-
+list_filler(Xorlist *list) {
   // Initializing the list by pushing back several values
-  int	tab[] = {50, 150, 284, 6465};
   unsigned int	i = 0;
   while (i < sizeof(tab) / sizeof(*tab)) {
     if (Xor_pushfront(list, tab + i) == EXIT_FAILURE)
       return (EXIT_FAILURE);
     ++i;
   }
-  // !
+  return (EXIT_SUCCESS);
+}
+
+int
+main() {
+  Xorlist	*list = Xor_create();
+
   Xor_foreach(list, &dump_it);
-  while (Xor_popback(list) == EXIT_SUCCESS) {
+  if (list_filler(list) == EXIT_FAILURE)
+    return (EXIT_FAILURE);
+  printf("Poping front:\n");
+  do {
     printf("Foreach:\n");
     Xor_foreach(list, &dump_it);
-  }
-  return (EXIT_SUCCESS);
+  } while (Xor_popfront(list) == EXIT_SUCCESS);
+  if (list_filler(list) == EXIT_FAILURE)
+    return (EXIT_FAILURE);
+  printf("Poping back:\n");
+  do {
+    printf("Foreach:\n");
+    Xor_foreach(list, &dump_it);
+  } while (Xor_popback(list) == EXIT_SUCCESS);
+  return (Xor_destroy(list));
 }
