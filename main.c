@@ -3,16 +3,14 @@
 #include	<stdint.h>
 #include	"xorlist.h"
 
-Xormodule *s;
-
-int	tab[] = {50, 150, 284, 6465};
+int	tab[] = {600, 52, 50, 10, 284, 6465};
 void
 dump_it(void *t) {
   printf("%d\n", *(int *)t);
 }
 
 int
-list_filler(Xorlist *list) {
+list_filler(Xorlist list) {
   // Initializing the list by pushing back several values
   unsigned int	i = 0;
   while (i < sizeof(tab) / sizeof(*tab)) {
@@ -25,8 +23,11 @@ list_filler(Xorlist *list) {
 
 int
 main() {
-  Xorlist	*list = Xor_create();
+  Xorlist	list = Xor_create();
 
+  printf("size of list: %ld\n", sizeof(Xorlist));
+  if (!list)
+    return (EXIT_FAILURE);
   Xor_foreach(list, &dump_it);
   if (list_filler(list) == EXIT_FAILURE)
     return (EXIT_FAILURE);

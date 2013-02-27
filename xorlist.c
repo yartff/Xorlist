@@ -5,9 +5,9 @@
 #include	<stdlib.h>
 #include	"xorlist.h"
 
-Xorlist *
+Xorlist
 Xor_create(void) {
-  Xorlist	*list;
+  Xorlist	list;
   if (!(list = malloc(sizeof(*list))))
     return (NULL);
   memset(list, 0, sizeof(*list));
@@ -15,7 +15,7 @@ Xor_create(void) {
 }
 
 int
-Xor_destroy(Xorlist *list) {
+Xor_destroy(Xorlist list) {
   while (Xor_popback(list) == EXIT_SUCCESS);
   free(list);
   return (EXIT_SUCCESS);
@@ -33,12 +33,12 @@ Xor_foreach_go(Xormodule *begin, void (*callback)(void *)) {
 }
 
 void
-Xor_foreach_rev(Xorlist *list, void (*callback)(void *)) {
+Xor_foreach_rev(Xorlist list, void (*callback)(void *)) {
   Xor_foreach_go(list->last, callback);
 }
 
 void
-Xor_foreach(Xorlist *list, void (*callback)(void *)) {
+Xor_foreach(Xorlist list, void (*callback)(void *)) {
   Xor_foreach_go(list->first, callback);
 }
 
@@ -57,7 +57,7 @@ Xor_newmodule(void *elem, void *kp, void *kn) {
  */
 
 static int
-Xor_emptypush(Xorlist *list, void *elem) {
+Xor_emptypush(Xorlist list, void *elem) {
   Xormodule	*new;
 
   if (!(new = Xor_newmodule(elem, NULL, NULL)))
@@ -69,7 +69,7 @@ Xor_emptypush(Xorlist *list, void *elem) {
 }
 
 static int
-Xor_push_go(Xorlist *list, Xormodule **fl, void *elem) {
+Xor_push_go(Xorlist list, Xormodule **fl, void *elem) {
   Xormodule	*ref = *fl, *prev, *new;
 
   if (!ref)
@@ -84,12 +84,12 @@ Xor_push_go(Xorlist *list, Xormodule **fl, void *elem) {
 }
 
 int
-Xor_pushback(Xorlist *list, void *elem) {
+Xor_pushback(Xorlist list, void *elem) {
   return (Xor_push_go(list, &list->last, elem));
 }
 
 int
-Xor_pushfront(Xorlist *list, void *elem) {
+Xor_pushfront(Xorlist list, void *elem) {
   return (Xor_push_go(list, &list->first, elem));
 }
 
@@ -118,11 +118,11 @@ Xor_pop_go(Xormodule **flp, Xormodule **fln) {
 }
 
 int
-Xor_popfront(Xorlist *list) {
+Xor_popfront(Xorlist list) {
   return (Xor_pop_go(&list->first, &list->last));
 }
 
 int
-Xor_popback(Xorlist *list) {
+Xor_popback(Xorlist list) {
   return (Xor_pop_go(&list->last, &list->first));
 }
