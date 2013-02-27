@@ -1,4 +1,5 @@
 NAME		=	xorlist_tester
+RM		=	@rm -rfv
 
 SRC		=	\
 			main.c		\

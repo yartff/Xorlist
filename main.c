@@ -23,8 +23,8 @@ main() {
     ++i;
   }
   // !
-    Xor_foreach(list, &dump_it);
-  while (Xor_popfront(list) == EXIT_SUCCESS) {
+  Xor_foreach(list, &dump_it);
+  while (Xor_popback(list) == EXIT_SUCCESS) {
     printf("Foreach:\n");
     Xor_foreach(list, &dump_it);
   }

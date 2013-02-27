@@ -90,21 +90,32 @@ Xor_pushfront(Xorlist *list, void *elem) {
  * Pop Methods
  */
 
-int
-Xor_popfront(Xorlist *list) {
+static int
+Xor_pop_go(Xormodule **flp, Xormodule **fln) {
   Xormodule	*p, *next, *pnext;
-  if (!(p = list->first))
+
+  if (!(p = *flp))
     return (EXIT_FAILURE);
-  if (!(next = XOR_KEY_ADDR(NULL, p->key)))
-    return (EXIT_FAILURE);
+  if (*flp == *fln) {
+    *flp = NULL;
+    *fln = NULL;
+    free(p);
+    return (EXIT_SUCCESS);
+  }
+  next = XOR_KEY_ADDR(NULL, p->key); // Should never equals NULL so no check
   pnext = XOR_KEY_ADDR(p, next->key);
   free(p);
   next->key = XOR_KEY(NULL, pnext);
-  if (list->last == list->first) {
-    list->last = NULL;
-    list->first = NULL;
-    return (EXIT_SUCCESS);
-  }
-  list->first = next;
+  *flp = next;
   return (EXIT_SUCCESS);
+}
+
+int
+Xor_popfront(Xorlist *list) {
+  return (Xor_pop_go(&list->first, &list->last));
+}
+
+int
+Xor_popback(Xorlist *list) {
+  return (Xor_pop_go(&list->last, &list->first));
 }
