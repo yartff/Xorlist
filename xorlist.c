@@ -126,3 +126,47 @@ int
 Xor_popback(Xorlist list) {
   return (Xor_pop_go(&list->last, &list->first));
 }
+
+/*
+ * Sort Methods
+ */
+
+# define	C(c)	(*(int *)c)
+# define	D(c)	(!c ? -1 : C(c->elem))
+static void
+Xor_sort_insert(Xorlist list, Xormodule *node, int (*callback)(void *, void *)) {
+  Xormodule	*next = list->first, *p = NULL, *tmp;
+  
+  while (p != list->last) {
+    if (callback(node->elem, next->elem)) {
+      printf("%d -> {%d..%d}\n", D(node), D(p), D(next));
+      node->key = XOR_KEY(p, next);
+      if (next == list->first)
+	list->first = node;
+
+      return ;
+      // Do the swamp!
+    }
+    tmp = XOR_KEY_ADDR(p, next->key);
+    p = next;
+    next = tmp;
+  }
+  printf("END\n");
+}
+
+void
+Xor_sort(Xorlist list, int (*callback)(void *, void *)) {
+  Xormodule	*prev = list->first, *node, *tmp;
+
+  // No need more check
+  if (list->size <= 1) // || !list->first || !node
+    return ;
+  node = XOR_KEY_ADDR(NULL, list->first->key);
+  list->last = list->first;
+  do {
+    Xor_sort_insert(list, node, callback);
+    tmp = XOR_KEY_ADDR(prev, node->key);
+    prev = node;
+    node = tmp;
+  } while (node);
+}

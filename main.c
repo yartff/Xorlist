@@ -3,7 +3,11 @@
 #include	<stdint.h>
 #include	"xorlist.h"
 
-int	tab[] = {600, 52, 50, 10, 284, 6465};
+int	tab[] = {6, 52, 50, 10, 284, 6465, 51};
+int
+sort(void *a, void *b) {
+  return (*(int *)a < *(int *)b);
+}
 void
 dump_it(void *t) {
   printf("%d\n", *(int *)t);
@@ -14,7 +18,7 @@ list_filler(Xorlist list) {
   // Initializing the list by pushing back several values
   unsigned int	i = 0;
   while (i < sizeof(tab) / sizeof(*tab)) {
-    if (Xor_pushfront(list, tab + i) == EXIT_FAILURE)
+    if (Xor_pushback(list, tab + i) == EXIT_FAILURE)
       return (EXIT_FAILURE);
     ++i;
   }
@@ -43,5 +47,11 @@ main() {
     printf("Foreach:\n");
     Xor_foreach(list, &dump_it);
   } while (Xor_popback(list) == EXIT_SUCCESS);
+  if (list_filler(list) == EXIT_FAILURE)
+    return (EXIT_FAILURE);
+  printf("Sorting:\n");
+  Xor_sort(list, sort);
+  printf("Foreach:\n");
+  Xor_foreach(list, &dump_it);
   return (Xor_destroy(list));
 }
