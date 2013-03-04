@@ -3,7 +3,8 @@
 #include	<stdint.h>
 #include	"xorlist.h"
 
-int	tab[] = {6, 52, 50, 10, 284, 6465, 51};
+static int	tab[] = {5, 3, 1, 2, 7, 4, 0, 6};
+
 int
 sort(void *a, void *b) {
   return (*(int *)a < *(int *)b);
@@ -29,29 +30,33 @@ int
 main() {
   Xorlist	list = Xor_create();
 
+#if 0
   printf("size of list: %ld\n", sizeof(Xorlist));
   if (!list)
     return (EXIT_FAILURE);
   Xor_foreach(list, &dump_it);
   if (list_filler(list) == EXIT_FAILURE)
     return (EXIT_FAILURE);
-  printf("Poping front:\n");
+  printf("=====================\nPoping front:\n");
   do {
-    printf("Foreach:\n");
+    printf("--\n");
     Xor_foreach(list, &dump_it);
   } while (Xor_popfront(list) == EXIT_SUCCESS);
   if (list_filler(list) == EXIT_FAILURE)
     return (EXIT_FAILURE);
-  printf("Poping back:\n");
+  printf("=====================\nPoping back:\n");
   do {
-    printf("Foreach:\n");
+    printf("--\n");
     Xor_foreach(list, &dump_it);
   } while (Xor_popback(list) == EXIT_SUCCESS);
+#endif
   if (list_filler(list) == EXIT_FAILURE)
     return (EXIT_FAILURE);
-  printf("Sorting:\n");
+  printf("=====================\nSorting:\n");
   Xor_sort(list, sort);
   printf("Foreach:\n");
   Xor_foreach(list, &dump_it);
+  printf("Foreach_rev:\n");
+  Xor_foreach_rev(list, &dump_it);
   return (Xor_destroy(list));
 }

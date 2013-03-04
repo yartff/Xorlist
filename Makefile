@@ -7,6 +7,7 @@ SRC		=	\
 
 OBJ		=	$(SRC:.c=.o)
 CFLAGS		+=	-Wall -Wextra
+CFLAGS		+=	-g3
 
 $(NAME):	$(OBJ)
 		$(CC) $(OBJ) -o $(NAME)
