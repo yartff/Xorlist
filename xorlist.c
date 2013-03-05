@@ -135,7 +135,7 @@ Xor_insert_between(Xormodule *node, Xormodule *a, Xormodule *b) {
   if (b)
     b->key = XOR_KEY(node, XOR_KEY(a, b->key));
   if (a)
-    a->key = XOR_KEY(node, XOR_KEY_ADDR(b, a->key));
+    a->key = XOR_KEY(node, XOR_KEY(b, a->key));
 }
 
 static void
