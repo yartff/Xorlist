@@ -32,5 +32,6 @@ int		Xor_pushfront(Xorlist, void *);
 void		Xor_foreach(Xorlist, void (*)(void *));
 void		Xor_foreach_rev(Xorlist, void (*)(void *));
 void		Xor_sort(Xorlist, int (*)(void *, void *));
+int		Xor_push_into(Xorlist, void *, int (*)());
 
 #endif

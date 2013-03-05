@@ -1,5 +1,3 @@
-#include	<stdio.h>
-//
 #include	<stdlib.h>
 #include	<string.h>
 #include	<stdlib.h>
@@ -131,12 +129,8 @@ Xor_popback(Xorlist list) {
  * Sort Methods
  */
 
-# define	C(c)	(*(int *)c)
-# define	D(c)	(!c ? -1 : C(c->elem))
-void
-dump_it(void *t);
 static void
-Xor_insert_into(Xormodule *node, Xormodule *a, Xormodule *b) {
+Xor_insert_between(Xormodule *node, Xormodule *a, Xormodule *b) {
   node->key = XOR_KEY(a, b);
   if (b)
     b->key = XOR_KEY(node, XOR_KEY(a, b->key));
@@ -150,7 +144,7 @@ Xor_sort_insert(Xorlist list, Xormodule *node, int (*callback)(void *, void *)) 
 
   while (next) {
     if (callback(node->elem, next->elem)) {
-      Xor_insert_into(node, p, next);
+      Xor_insert_between(node, p, next);
       if (next == list->first)
 	list->first = node;
       return ;
@@ -159,8 +153,19 @@ Xor_sort_insert(Xorlist list, Xormodule *node, int (*callback)(void *, void *)) 
     p = next;
     next = tmp;
   }
-  Xor_insert_into(node, p, NULL);
+  Xor_insert_between(node, p, NULL);
   list->last = node;
+}
+
+int
+Xor_push_into(Xorlist list, void *elem, int (*callback)(void *, void *)) {
+  Xormodule	*new;
+
+  if (!(new = malloc(sizeof(*new))))
+    return (EXIT_FAILURE);
+  new->elem = elem;
+  Xor_sort_insert(list, new, callback);
+  return (EXIT_SUCCESS);
 }
 
 void

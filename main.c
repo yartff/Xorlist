@@ -52,6 +52,14 @@ main() {
 #endif
   if (list_filler(list) == EXIT_FAILURE)
     return (EXIT_FAILURE);
+
+  int	retab[] = {-1, 12, 5};
+  unsigned int	i = 0;
+  while (i < sizeof(retab) / sizeof(*retab)) {
+    if (Xor_push_into(list, &retab[i], sort) == EXIT_FAILURE)
+      return (EXIT_FAILURE);
+    ++i;
+  }
   printf("=====================\nSorting:\n");
   Xor_sort(list, sort);
   printf("Foreach:\n");
