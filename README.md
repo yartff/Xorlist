@@ -29,4 +29,6 @@ Variations exists with Addition key or Substraction key.
 More informations about all that here:
 http://en.wikipedia.org/wiki/XOR_linked_list
 
+If you are asking about strange developping decisions I made, just remember I coded this in optimizations purpose.
+
 Cheers.
